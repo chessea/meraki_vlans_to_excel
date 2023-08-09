@@ -8,7 +8,7 @@ load_dotenv()
 
 # Guardar variables
 API_KEY = os.getenv("API_KEY")
-ORGANIZATION_ID = os.getenv("ORGANIZATION_ID")
+ORGANIZATION_ID = os.getenv("ORGANIZATION_ID_AIEP")
 
 
 all_networks = get_all_networks(API_KEY, ORGANIZATION_ID)
