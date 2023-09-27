@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 
 # Cargar variables de entorno()
 load_dotenv()
-allowed_models = ["MR20", "MR33", "MR36"]
+allowed_models = ["MR20", "MR33", "MR36", "MR44"]
 API_KEY = os.getenv("API_KEY")
-ORGANIZATION_ID = os.getenv("ORGANIZATION_ID_JUNJI")
+ORGANIZATION_ID = os.getenv("ORGANIZATION_ID_AIEP")
 
 
 
@@ -16,24 +16,23 @@ all_networks = get_all_networks(API_KEY, ORGANIZATION_ID)
 data = []
 
 for network in all_networks:
-    tags = network["tags"]
-    if "OFICINA" in tags:
-        name = network['name']
-        network_id = network['id']
-
-        devices = get_device_of_networks(API_KEY, network_id)
-
-        for device in devices:
-            if device["model"] in allowed_models:
-                ap_info = {
-                    "Network": name,
-                    "AP Name": device.get('name', 'N/A'),
-                    "MAC Address": device.get('mac', 'N/A'),
-                    "Serial Number": device.get('serial', 'N/A'),
-                    "IP Address": device.get('lanIp', 'N/A'),
-                    "Model": device.get('model', 'N/A')
-                }
-                data.append(ap_info)
+    #tags = network["tags"]
+    #if "OFICINA" in tags:
+    name = network['name']
+    network_id = network['id']
+    devices = get_device_of_networks(API_KEY, network_id)
+    for device in devices:
+        if device["model"] in allowed_models:
+            ap_info = {
+                "Network": name,
+                "AP Name": device.get('name', 'N/A'),
+                "MAC Address": device.get('mac', 'N/A'),
+                "Serial Number": device.get('serial', 'N/A'),
+                "IP Address": device.get('lanIp', 'N/A'),
+                "Model": device.get('model', 'N/A')
+            }
+            print(device["model"])
+            data.append(ap_info)
 
 # Crear un DataFrame de pandas
 df = pd.DataFrame(data)

@@ -56,3 +56,20 @@ def get_device_of_networks(api_key, networks_id):
     else:
         print(f"Error en la solicitud de DEVICE: Código de estado {response.status_code}")
         return None
+    
+
+def get_vlans_dns_networks(api_key, networks_id):
+
+    url = f"https://api.meraki.com/api/v1/networks/{networks_id}/appliance/vlans"
+
+    headers = {
+        "Accept": "application/json",
+        "X-Cisco-Meraki-API-Key": api_key
+    }
+    response = requests.request('GET', url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error en la solicitud de vlans: Código de estado {response.status_code}")
+        return None
